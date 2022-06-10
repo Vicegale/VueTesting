@@ -1,5 +1,5 @@
 import flask
-import redis
+import rejson
 import json
 
 # Create the Flask application
@@ -14,21 +14,26 @@ def health():
 @app.route('/items', methods=['GET'])
 def get_items():
     #get items from redis
-    r = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
-    items = r.lrange('items', 0, -1)
-    return json.dumps(items)
+    r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
+    items = r.jsonget('items')
+    #set response content type
+    response = flask.Response(json.dumps(items), mimetype='application/json')
+    return response
 
 #/items POST request
 @app.route('/postitem', methods=['GET'])
 def add_item():
     #get items from redis
-    r = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
+    r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
     #json stringify
     item = json.dumps({'name':'Boots of Haste', 'stats': ['+10% speed', '+10% movement speed']})
-    r.rpush('items', item)
+    r.jsonset('items', rejson.Path.rootPath(), item)
     return item
 
 #Run the flask application
 if __name__ == '__main__':
+    r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
+    if(not r.exists('items')):
+        r.jsonset('items', rejson.Path.rootPath(), [])
     app.run(host='0.0.0.0', debug=True)
 

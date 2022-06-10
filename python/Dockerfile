@@ -1,6 +1,6 @@
 FROM python
 
-RUN pip install flask redis
+RUN pip install flask rejson
 
 COPY . .
 

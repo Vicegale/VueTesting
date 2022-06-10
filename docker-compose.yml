@@ -5,7 +5,7 @@ services:
     ports:
       - "5000:5000"
   redis:
-    image: redis
+    image: redislabs/rejson
     ports:
       - "6379:6379"
     volumes:
