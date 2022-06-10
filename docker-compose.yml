@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  python:
+    build: ./python/.
+    ports:
+      - "5000:5000"
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    environment:
+      - REDIS_PASSWORD=redis
+      - REDIS_PORT=6379
+volumes:
+  redis-data: {}
