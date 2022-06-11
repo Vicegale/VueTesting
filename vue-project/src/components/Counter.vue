@@ -10,17 +10,15 @@ const increment = () => {
 const decrement = () => {
   counter.value--;
 };
-
 </script>
 
 <template>
-<!--display a counter inside a button-->
-<div class="navbar-button">
+  <!--display a counter inside a button-->
+  <div class="navbar-button">
     <button @click="increment">+</button>
     <button @click="decrement">-</button>
-    <h1>{{counter}}</h1>
-</div>
+    <h1>{{ counter }}</h1>
+  </div>
 </template>
 
-<style>
-</style>
+<style></style>
