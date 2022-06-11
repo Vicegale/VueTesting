@@ -21,13 +21,13 @@ def get_items():
     return response
 
 #/items POST request
-@app.route('/postitem', methods=['GET'])
+@app.route('/items', methods=['POST'])
 def add_item():
     #get items from redis
     r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
     #json stringify
-    item = json.dumps({'name':'Boots of Haste', 'stats': ['+10% speed', '+10% movement speed']})
-    r.jsonset('items', rejson.Path.rootPath(), item)
+    item = flask.request.get_json()
+    r.jsonarrappend('items', rejson.Path.rootPath(), item)
     return item
 
 #Run the flask application
