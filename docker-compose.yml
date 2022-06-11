@@ -1,5 +1,9 @@
 version: '3.3'
 services:
+  web:
+    build: ./vue-project/.
+    ports:
+      - "8080:8080"
   python:
     build: ./python/.
     ports:
