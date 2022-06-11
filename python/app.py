@@ -1,9 +1,11 @@
 import flask
+import flask_cors
 import rejson
 import json
 
-# Create the Flask application
+# Create the Flask application and CORSify it
 app = flask.Flask(__name__)
+flask_cors.CORS(app)
 
 #Health check endpoint
 @app.route('/health')
@@ -18,7 +20,7 @@ def get_items():
     items = r.jsonget('items')
     #set response content type
     #set access control headers
-    headers = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
+    headers = {'Content-Type': 'application/json'}
     response = flask.Response(json.dumps(items), status=200, headers=headers)
     return response
 
@@ -32,7 +34,9 @@ def add_item():
     if(not r.exists('items')):
         r.jsonset('items', rejson.Path.rootPath(), [])
     r.jsonarrappend('items', rejson.Path.rootPath(), item)
-    return item
+    headers = {'Content-Type': 'application/json'}
+    response = flask.Response(item, status=200, headers=headers)
+    return response
 
 #Run the flask application
 if __name__ == '__main__':

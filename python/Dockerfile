@@ -1,6 +1,6 @@
 FROM python
 
-RUN pip install flask rejson
+RUN pip install flask rejson flask_cors
 
 COPY . .
 
