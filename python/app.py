@@ -17,7 +17,9 @@ def get_items():
     r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
     items = r.jsonget('items')
     #set response content type
-    response = flask.Response(json.dumps(items), mimetype='application/json')
+    #set access control headers
+    headers = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
+    response = flask.Response(json.dumps(items), status=200, headers=headers)
     return response
 
 #/items POST request
