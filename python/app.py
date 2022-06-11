@@ -29,6 +29,8 @@ def add_item():
     r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
     #json stringify
     item = flask.request.get_json()
+    if(not r.exists('items')):
+        r.jsonset('items', rejson.Path.rootPath(), [])
     r.jsonarrappend('items', rejson.Path.rootPath(), item)
     return item
 
