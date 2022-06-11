@@ -2,36 +2,23 @@
 import ItemDisplay from "./components/ItemDisplay.vue";
 import Counter from "./components/Counter.vue";
 import axios from "axios";
-import { onMounted } from "vue";
-import {reactive} from "vue";
+import { onMounted, provide } from "vue";
+import { reactive } from "vue";
+import ItemCreate from "./components/ItemCreate.vue";
 
-const state = reactive({'items': []});
+const state = reactive({ items: [] });
 
 onMounted(() => {
-  axios.get('http://localhost:5000/items').then(response => {
+  axios.get("http://localhost:5000/items").then((response) => {
     state.items = response.data;
   });
 });
 
-/*
-const items = [
-  {
-    name: "Boots of Haste",
-    stats: ["+30% movement speed", "+15% attack speed"],
-  },
-  {
-    name: "Blasting Wand",
-    stats: [
-      "+10% increased Fire Damage",
-      "+20% attack speed",
-      "+20% critical strike chance",
-    ],
-  },
-  {
-    name: "Dagger",
-    stats: ["+20% attack speed", "+20% critical strike chance"],
-  },
-];*/
+provide("addItem", { addItem });
+
+function addItem(item: Object) {
+  state.items.push(item);
+}
 </script>
 
 <template>
@@ -42,6 +29,7 @@ const items = [
   </header>
 
   <main>
+    <ItemCreate />
     <ItemDisplay v-for="i in state.items" :item="i"></ItemDisplay>
   </main>
 </template>
