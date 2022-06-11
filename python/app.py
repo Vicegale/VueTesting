@@ -17,7 +17,8 @@ def health():
 def get_items():
     #get items from redis
     r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
-    items = r.jsonget('items')
+    if(r.exists('items')):
+        items = r.jsonget('items')
     #set response content type
     #set access control headers
     headers = {'Content-Type': 'application/json'}
@@ -40,8 +41,5 @@ def add_item():
 
 #Run the flask application
 if __name__ == '__main__':
-    r = rejson.Client(host='redis', port=6379, db=0, decode_responses=True)
-    if(not r.exists('items')):
-        r.jsonset('items', rejson.Path.rootPath(), [])
     app.run(host='0.0.0.0', debug=True)
 
