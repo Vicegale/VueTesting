@@ -3,10 +3,10 @@ import { reactive, ref, inject } from "vue";
 import axios from "axios";
 const item = reactive({
   name: "",
-  stats: [],
+  stats: [] as string[]
 });
 
-const { addItem } = inject("addItem");
+const addItem: any = inject("addItem");
 
 const newStat = ref("");
 

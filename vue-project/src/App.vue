@@ -6,7 +6,7 @@ import { onMounted, provide } from "vue";
 import { reactive } from "vue";
 import ItemCreate from "./components/ItemCreate.vue";
 
-const state = reactive({ items: [] });
+const state = reactive({ items: [] as any[] });
 
 onMounted(() => {
   axios.get("http://localhost:5000/items").then((response) => {
@@ -14,9 +14,9 @@ onMounted(() => {
   });
 });
 
-provide("addItem", { addItem });
+provide("addItem", addItem);
 
-function addItem(item: Object) {
+function addItem(item: any) {
   state.items.push(item);
 }
 </script>
