@@ -15,9 +15,14 @@ onMounted(() => {
 });
 
 provide("addItem", addItem);
+provide("deleteItem", deleteItem);
 
 function addItem(item: any) {
   state.items.push(item);
+}
+
+function deleteItem(item: any) {
+  state.items = state.items.filter((x) => x != item)
 }
 </script>
 

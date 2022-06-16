@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, inject } from "vue";
 defineProps(["item"]);
+
+const deleteItem: any = inject('deleteItem');
 </script>
 
 <template>
   <div class="itemframe-parent">
     <div class="itemframe-header">
       <h1 class="itemname">{{ item.name }}</h1>
+      <div>
+        <button class="itemframe-delete" @click="deleteItem(item)">X</button>
+      </div>
     </div>
     <div class="itemframe-body">
       <ul class="stat" v-for="stat in item.stats">
@@ -58,5 +63,14 @@ defineProps(["item"]);
   color: white;
   margin-left: 10px;
   font-family: "Courier New", Courier, monospace;
+}
+.itemframe-delete {
+  background-color: red;
+  border-radius: 10px;
+  width: 30px;
+  font-weight: 900;
+  font-size: large;
+  float: right;
+  align-self: flex-end;
 }
 </style>
