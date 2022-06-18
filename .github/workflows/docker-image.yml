@@ -8,13 +8,20 @@ on:
 
 jobs:
 
-  build:
+  build-front-end:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - name: Build the Front-end Docker image
-      run: docker build --tag vue:$(date +%s) vue-testing/.
+      run: docker build --tag vue:$(date +%s) vue-project/.
+      
+  build-back-end:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3    
     - name: Build the Back-end Docker image
-      run: docker build --tag python:$(date +%s) python/.
+      run: docker build --tag python:$(date +%s) python/.  
