@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Front-end Docker image
+      run: docker build --tag vue:$(date +%s) vue-testing/.
+    - name: Build the Back-end Docker image
+      run: docker build --tag python:$(date +%s) python/.
